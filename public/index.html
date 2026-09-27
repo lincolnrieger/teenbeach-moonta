@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teen Beach Moonta — who's where</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Archivo:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  color-scheme:light;
+  --teal:#2BA8A0; --teal-dk:#1B7F79; --teal-lt:#E3F5F3;
+  --pink:#F5459B; --pink-lt:#FDE6F1;
+  --yellow:#FFD23F; --yellow-lt:#FFF6DA;
+  --orange:#F5871F; --coral:#FF6F61;
+  --sand:#FBE3BD;
+  --ink:#16333A; --dim:#5F7A80;
+  --paper:#FFFFFF; --soft:#F4F9F9; --line:#DCE7E7;
+  --ok:#17845F; --ok-bg:#E2F5EC;
+  --warn-bg:#FFF0D6; --warn:#A4650B;
+  --bad:#C0392B; --bad-bg:#FCE7E4;
+  --shadow:0 10px 28px rgba(22,51,58,.10);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:#fff}
+body{
+  color:var(--ink);background:#fff;
+  font-family:"Archivo","Helvetica Neue",Arial,sans-serif;font-size:16px;line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+h1,h2,h3,.fun{font-family:"Fredoka","Archivo",sans-serif;font-weight:600;letter-spacing:.005em}
+[hidden]{display:none !important}
+:focus-visible{outline:3px solid var(--teal);outline-offset:2px;border-radius:8px}
+
+/* ---- masthead ---- */
+.hero{background:var(--teal);color:#fff;padding:18px 0 0;position:relative}
+.hero-in{max-width:1180px;margin:0 auto;padding:0 18px 6px;display:flex;align-items:center;gap:16px;flex-wrap:wrap}
+.badge{width:74px;height:74px;border-radius:50%;flex:0 0 auto;box-shadow:0 4px 14px rgba(0,0,0,.18)}
+.hero h1{margin:0;font-size:clamp(23px,4.2vw,32px);line-height:1.05;font-weight:700}
+.hero p{margin:3px 0 0;font-size:14px;opacity:.92;font-weight:500}
+.tally{margin-left:auto;display:flex;gap:8px}
+.tally div{background:rgba(255,255,255,.16);border-radius:12px;padding:7px 14px;text-align:center;min-width:74px}
+.tally b{display:block;font-size:22px;line-height:1.1;font-family:"Fredoka",sans-serif;font-weight:600}
+.tally small{font-size:11px;opacity:.9;font-weight:600}
+.tally .hot{background:var(--coral)}
+.wave{display:block;width:100%;height:34px}
+
+.wrap{max-width:1180px;margin:0 auto;padding:0 18px 70px}
+
+/* ---- tabs ---- */
+.tabs{display:flex;gap:8px;margin:14px 0 18px;overflow-x:auto;scrollbar-width:none}
+.tab{
+  font:inherit;font-family:"Fredoka",sans-serif;font-size:16px;font-weight:500;
+  padding:10px 18px;border-radius:999px;border:2px solid var(--line);
+  background:#fff;color:var(--dim);cursor:pointer;white-space:nowrap;flex:0 0 auto;
+}
+@media(max-width:600px){.tab{font-size:14.5px;padding:8px 10px;flex:1 1 auto}.tabs{gap:6px}}
+.tab:hover{color:var(--ink);border-color:var(--teal)}
+.tab[aria-selected="true"]{background:var(--teal);border-color:var(--teal);color:#fff}
+
+
+.lead{font-size:15px;color:var(--dim);margin:0 0 14px}
+.card{background:#fff;border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow)}
+.card + .card{margin-top:18px}
+h2{font-size:21px;margin:0 0 4px}
+h3{font-size:13px;font-weight:700;letter-spacing:.06em;color:var(--dim);margin:0 0 10px;font-family:"Archivo",sans-serif;text-transform:none}
+.muted{color:var(--dim);font-size:14px}
+.empty{color:var(--dim);font-size:15px;padding:22px;text-align:center;border:2px dashed var(--line);border-radius:14px}
+
+label{display:block;font-size:13.5px;font-weight:700;color:var(--dim);margin-bottom:6px}
+input,textarea,select{
+  width:100%;padding:12px 14px;font:inherit;font-size:15px;color:var(--ink);
+  background:#fff;border:2px solid var(--line);border-radius:12px;
+}
+input:focus,textarea:focus,select:focus{border-color:var(--teal);outline:none}
+textarea{min-height:100px;resize:vertical}
+.btn{
+  font:inherit;font-size:15px;font-weight:700;padding:12px 18px;border-radius:12px;cursor:pointer;
+  background:#fff;color:var(--ink);border:2px solid var(--line);
+}
+.btn:hover{border-color:var(--teal)}
+.btn.primary{background:var(--pink);border-color:var(--pink);color:#fff}
+.btn.primary:hover{filter:brightness(1.05)}
+.btn.teal{background:var(--teal);border-color:var(--teal);color:#fff}
+.btn.small{font-size:13.5px;padding:8px 12px;border-radius:10px;font-weight:600}
+.btn.danger{color:var(--bad)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.row > *{flex:1 1 170px}
+.row .fit{flex:0 0 auto}
+
+/* ---- scan ---- */
+.station{display:grid;gap:18px;grid-template-columns:1fr}
+@media(min-width:960px){.station{grid-template-columns:minmax(0,1.1fr) minmax(330px,.9fr);align-items:start}}
+.dest{
+  font:inherit;text-align:left;cursor:pointer;padding:10px 14px;border-radius:14px;
+  border:2px solid var(--line);background:#fff;color:var(--ink);flex:1 1 150px;max-width:100%;
+}
+.dest b{display:block;font-size:15px;font-weight:700;line-height:1.2}
+.dest small{display:block;font-size:12px;color:var(--dim);margin-top:2px}
+.dest:hover{border-color:var(--teal)}
+.dest[aria-pressed="true"]{background:var(--teal);border-color:var(--teal);color:#fff}
+.dest[aria-pressed="true"] small{color:rgba(255,255,255,.85)}
+.dest.off[aria-pressed="true"]{background:var(--orange);border-color:var(--orange)}
+.dest.home[aria-pressed="true"]{background:var(--ink);border-color:var(--ink)}
+.fixed{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.fixed .dest{padding:14px 16px}
+.fixed .dest b{font-size:17px}
+.pp-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin:20px 0 10px}
+.pp-head h3{margin:0}
+.pp-head .day{padding:6px 11px;font-size:13px}
+.dlist{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px}
+.dopt{font:inherit;text-align:left;cursor:pointer;display:grid;grid-template-columns:auto minmax(0,1fr);gap:1px 12px;align-items:center;
+  padding:10px 12px;border-radius:12px;border:2px solid var(--line);background:#fff;color:var(--ink)}
+.dopt .t{grid-row:span 2;font-weight:700;font-size:13.5px;color:var(--dim);font-variant-numeric:tabular-nums;min-width:42px}
+.dopt b{font-size:14.5px;line-height:1.2}
+.dopt small{font-size:12px;color:var(--dim)}
+.dopt:hover{border-color:var(--teal)}
+.dopt.off{border-left:6px solid var(--orange)}
+.dopt.live{background:var(--teal-lt);border-color:var(--teal)}
+.dopt.live.off{border-left-color:var(--orange)}
+.dopt.past{opacity:.55}
+.dopt[aria-pressed="true"]{background:var(--teal);border-color:var(--teal);color:#fff;opacity:1}
+.dopt.off[aria-pressed="true"]{background:var(--orange);border-color:var(--orange)}
+.dopt[aria-pressed="true"] .t,.dopt[aria-pressed="true"] small{color:rgba(255,255,255,.88)}
+.linkbtn{font:inherit;grid-column:1/-1;justify-self:start;background:none;border:0;padding:4px 2px;cursor:pointer;
+  font-size:13.5px;font-weight:700;color:var(--teal-dk)}
+.going{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:14px;margin:10px 0 12px;background:var(--teal);color:#fff}
+.going.off{background:var(--orange)}
+.going.home{background:var(--ink)}
+.going.none{background:var(--warn-bg);color:var(--warn);border:2px dashed #EFD49B}
+.going .gtxt{min-width:0;flex:1 1 auto}
+.going small{display:block;font-size:11.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;opacity:.9}
+.going b{display:block;font-family:"Fredoka",sans-serif;font-size:21px;font-weight:600;line-height:1.15}
+.going .gnote{display:block;font-size:13px;opacity:.92;margin-top:1px}
+.going .btn{flex:0 0 auto;background:rgba(255,255,255,.2);border-color:transparent;color:inherit}
+.going.none .btn{background:#fff;border-color:#EFD49B}
+@media(max-width:600px){.fixed .dest{padding:12px}.fixed .dest b{font-size:16px}.dlist{grid-template-columns:1fr}}
+.scanrow{display:flex;gap:10px;margin-top:4px}
+.scanrow input{flex:1 1 auto;min-width:0}
+#scan{font-size:20px;font-weight:600;padding:16px;border-color:var(--teal)}
+#scan::placeholder{font-weight:500;font-size:16px}
+.ready{font-size:13px;color:var(--dim);margin-top:8px}
+.videowrap{margin-top:12px;position:relative;border-radius:14px;overflow:hidden;background:#000;aspect-ratio:4/3}
+.videowrap video{width:100%;height:100%;object-fit:cover;display:block}
+.reticle{position:absolute;inset:16%;border:3px solid rgba(255,255,255,.9);border-radius:14px}
+#findResults:not(:empty){margin-top:10px}
+
+.result{border-radius:18px;padding:22px;border:2px solid var(--line);background:var(--soft);min-height:170px;display:flex;flex-direction:column;justify-content:center}
+.result.out{background:var(--warn-bg);border-color:#EFD49B}
+.result.in{background:var(--ok-bg);border-color:#BCE3D1}
+.result.bad{background:var(--bad-bg);border-color:#F3C9C2}
+.result.home{background:#EEF3F4;border-color:#C6D6D9}
+.result .who{font-family:"Fredoka",sans-serif;font-size:clamp(26px,4.6vw,34px);font-weight:600;line-height:1.1}
+.result .what{font-size:17px;font-weight:600;margin-top:6px}
+.result .when{font-size:13.5px;color:var(--dim);margin-top:6px}
+.result #undoBtn{align-self:flex-start;margin-top:12px}
+/* On a phone the result floats over the bottom of the screen, so it is seen
+   straight after a scan without scrolling past the camera. */
+@media(max-width:959px){
+  .wrap{padding-bottom:150px}
+  .result{position:fixed;left:12px;right:12px;bottom:12px;z-index:30;min-height:0;padding:14px 16px;
+    box-shadow:0 12px 34px rgba(22,51,58,.25);flex-direction:row;flex-wrap:wrap;align-items:center;column-gap:14px}
+  .result.idle{display:none}
+  .result .who{font-size:22px;flex:1 1 100%}
+  .result .what{font-size:15px;margin-top:2px;flex:1 1 100%}
+  .result .when{font-size:12.5px;margin-top:2px;flex:1 1 auto}
+  .result #undoBtn{margin-top:6px}
+}
+@media(min-width:960px){#scanCard + .result{margin-top:18px}}
+.result.flash{animation:pop .25s ease-out}
+@keyframes pop{from{transform:scale(.97);opacity:.5}to{transform:none;opacity:1}}
+@media(prefers-reduced-motion:reduce){.result.flash{animation:none}}
+.recent{list-style:none;margin:0;padding:0;font-size:14.5px}
+.recent li{display:flex;justify-content:space-between;gap:10px;padding:9px 0;border-top:1px solid var(--line)}
+.recent li:first-child{border-top:0}
+.recent span{color:var(--dim);font-size:13px;white-space:nowrap}
+
+/* ---- board ---- */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:12px;margin-bottom:18px}
+.stat{border-radius:16px;padding:14px 16px;background:var(--teal-lt);border:1px solid #CDE9E6}
+.stat b{display:block;font-size:32px;line-height:1.05;font-family:"Fredoka",sans-serif;font-weight:600}
+.stat small{font-size:12.5px;font-weight:600;color:var(--dim)}
+.stat.pink{background:var(--pink-lt);border-color:#F8D3E5}
+.stat.warn{background:var(--warn-bg);border-color:#EFD49B}
+.stat.warn b{color:var(--bad)}
+.group{margin-bottom:20px}
+.group-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;border-bottom:2px solid var(--line);padding-bottom:8px;margin-bottom:12px}
+.group-head h3{margin:0;color:var(--ink);font-size:17px;font-family:"Fredoka",sans-serif;font-weight:600;letter-spacing:0}
+.group-head em{font-style:normal;color:var(--dim);font-size:13px}
+.group.away .group-head{border-bottom-color:var(--orange)}
+.people{display:flex;gap:10px;flex-wrap:wrap}
+.person{background:#fff;border:2px solid var(--line);border-radius:12px;padding:9px 12px;font-size:14.5px;min-width:140px}
+.person b{display:block;font-weight:700}
+.person small{color:var(--dim);font-size:12px}
+button.person{font:inherit;text-align:left;cursor:pointer;color:var(--ink)}
+button.person:hover{border-color:var(--teal)}
+.person.late{border-color:var(--coral);background:var(--bad-bg)}
+.person.late small{color:var(--bad);font-weight:700}
+.feed{list-style:none;margin:10px 0 0;padding:0;font-size:14.5px;max-height:360px;overflow:auto}
+.feed li{display:flex;gap:10px;align-items:baseline;padding:8px 0;border-top:1px solid var(--line)}
+.feed time{color:var(--dim);font-size:12.5px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.pill{font-size:11px;font-weight:800;padding:3px 8px;border-radius:999px;background:var(--ok-bg);color:var(--ok)}
+.pill.off{background:var(--warn-bg);color:var(--warn)}
+.pill.home{background:#EEF3F4;color:#4A5F63}
+details.log summary{font-family:"Fredoka",sans-serif;font-size:18px;font-weight:600;color:var(--ink)}
+
+/* ---- programme ---- */
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-bottom:14px}
+.days{display:flex;gap:6px;flex-wrap:wrap}
+.day{font:inherit;font-size:14px;font-weight:700;padding:8px 13px;border-radius:999px;border:2px solid var(--line);background:#fff;color:var(--dim);cursor:pointer}
+.day:hover{border-color:var(--teal);color:var(--ink)}
+.day[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.agenda{display:flex;flex-direction:column;gap:8px}
+.slot{display:grid;grid-template-columns:96px 1fr auto;gap:12px;align-items:center;padding:10px 12px 10px 14px;border:2px solid var(--line);border-radius:14px;
+  font:inherit;text-align:left;background:#fff;color:var(--ink);cursor:pointer;width:100%}
+.slot:hover{border-color:var(--teal)}
+.slot .tm{font-weight:700;font-size:14px;color:var(--dim);font-variant-numeric:tabular-nums}
+.slot .nm{font-weight:700;font-size:16px;min-width:0}
+.slot .nm small{display:block;font-weight:500;font-size:12.5px;color:var(--dim)}
+.slot .end{display:flex;align-items:center;gap:10px;white-space:nowrap}
+.slot .cnt{font-size:13px;font-weight:700;color:var(--teal-dk)}
+.slot .ed{font-size:13px;font-weight:700;color:var(--dim);border:2px solid var(--line);border-radius:10px;padding:5px 10px}
+.slot:hover .ed{border-color:var(--teal);color:var(--teal-dk)}
+.slot.now{border-color:var(--teal);background:var(--teal-lt)}
+.slot.meal{background:var(--yellow-lt);border-color:#F1E0AE}
+.slot.hid{background:#FAFBFB;border-style:dashed}
+.slot.hid .nm{color:var(--dim)}
+.slot.done{opacity:.6}
+@media(max-width:600px){.slot{grid-template-columns:62px 1fr auto;gap:10px;padding:10px 12px}.slot .tm{font-size:13px}.slot .ed{display:none}}
+.site{font-size:11px;font-weight:800;padding:2px 7px;border-radius:999px;background:var(--teal-lt);color:var(--teal-dk)}
+.site.off{background:var(--warn-bg);color:var(--warn)}
+
+/* ---- people ---- */
+.plist{display:flex;flex-direction:column}
+.prow{display:flex;align-items:center;gap:12px;padding:10px 0;border-top:1px solid var(--line)}
+.prow:first-child{border-top:0}
+.prow .who{flex:1 1 auto;min-width:0}
+.prow .who b{display:block}
+.prow .who small{color:var(--dim);font-size:13px}
+.prow .code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;letter-spacing:.08em;font-size:13.5px;font-weight:600;color:var(--dim)}
+.prow .acts{display:flex;gap:6px;flex:0 0 auto}
+.tag{font-size:11.5px;font-weight:700;padding:3px 9px;border-radius:999px;background:var(--ok-bg);color:var(--ok);white-space:nowrap}
+.tag.off{background:var(--warn-bg);color:var(--warn)}
+.tag.home{background:#EEF3F4;color:#4A5F63}
+@media(max-width:600px){.prow{flex-wrap:wrap}.prow .who{flex-basis:100%}}
+
+/* ---- modals + lanyard ---- */
+.modal{position:fixed;inset:0;background:rgba(16,50,56,.55);display:grid;place-items:center;padding:16px;z-index:40}
+.sheet{background:#fff;border-radius:20px;padding:22px;max-width:460px;width:100%;box-shadow:0 30px 60px rgba(0,0,0,.3);max-height:92vh;overflow:auto}
+.sheet h2{margin-bottom:14px}
+.sheet .row + .row{margin-top:12px}
+.sheet .foot{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
+.sheet .foot .grow{flex:1 1 auto}
+.check{display:flex;align-items:center;gap:9px;margin-top:14px;font-weight:600;color:var(--ink)}
+.check input{width:18px;height:18px;flex:0 0 auto}
+.lanyard{width:100%;max-width:300px;margin:0 auto;border-radius:12px;overflow:hidden;box-shadow:0 6px 20px rgba(22,51,58,.18)}
+.gate{position:fixed;inset:0;background:#2BA8A0;display:grid;place-items:center;padding:20px;z-index:60}
+.gatebox{background:#fff;border-radius:22px;padding:28px;max-width:340px;width:100%;text-align:center;box-shadow:0 24px 60px rgba(0,0,0,.25)}
+.gatebox img{border-radius:50%}
+.gatebox h1{font-size:23px;margin:14px 0 6px}
+.status{font-size:13.5px;color:var(--dim);margin-top:10px;min-height:1.3em}
+.status:empty{min-height:0;margin:0}
+details summary{cursor:pointer;font-size:14px;font-weight:700;color:var(--teal-dk)}
+</style>
+</head>
+<body>
+
+<div class="gate" id="gate" hidden>
+  <form class="gatebox" id="gateForm">
+    <img src="/logo.png" alt="" width="96" height="96">
+    <h1>Teen Beach Moonta</h1>
+    <p class="muted">Enter the staff PIN to open the board.</p>
+    <input id="pin" type="password" inputmode="numeric" autocomplete="off" placeholder="PIN" style="text-align:center;letter-spacing:.3em;font-size:20px">
+    <button class="btn primary" type="submit" style="width:100%;margin-top:12px">Open the board</button>
+    <p class="status" id="gateStatus"></p>
+  </form>
+</div>
+
+<div class="hero">
+  <div class="hero-in">
+    <img class="badge" id="heroLogo" src="/logo.png" alt="Teen Beach Moonta">
+    <div>
+      <h1>Teen Beach Moonta</h1>
+      <p>Branchmoot 2026 · 2–5 October</p>
+    </div>
+    <div class="tally" id="tally"></div>
+  </div>
+  <svg class="wave" viewBox="0 0 1200 40" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 22 C 150 44 250 2 400 14 C 550 26 620 44 780 30 C 920 18 1050 0 1200 16 L1200 40 L0 40 Z" fill="#fff"/>
+  </svg>
+</div>
+
+<div class="wrap">
+  <nav class="tabs" role="tablist">
+    <button class="tab" role="tab" data-view="station" aria-selected="true">Scan</button>
+    <button class="tab" role="tab" data-view="board" aria-selected="false">Who's where</button>
+    <button class="tab" role="tab" data-view="schedule" aria-selected="false">Programme</button>
+    <button class="tab" role="tab" data-view="members" aria-selected="false">People</button>
+  </nav>
+
+  <main>
+    <!-- SCAN -->
+    <section class="view" id="view-station">
+      <div class="station">
+        <div class="card" id="destCard">
+          <h2>Where are they going?</h2>
+          <p class="lead">Pick a place once. Everyone you scan goes there until you pick another.</p>
+          <div class="fixed" id="destFixed"></div>
+          <div class="pp-head">
+            <h3>Or an activity</h3>
+            <div class="days" id="destDays"></div>
+          </div>
+          <div class="dlist" id="destList"></div>
+        </div>
+
+        <div>
+          <div class="card" id="scanCard">
+            <h2>Scan a lanyard</h2>
+            <div class="going none" id="going"></div>
+            <div class="scanrow">
+              <input id="scan" type="text" autocomplete="off" spellcheck="false" placeholder="Scan, or type a code or name">
+              <button class="btn teal" type="button" id="camBtn">Camera</button>
+            </div>
+            <div class="people" id="findResults"></div>
+            <div class="videowrap" id="camWrap" hidden><video id="video" playsinline muted></video><div class="reticle"></div></div>
+            <p class="ready" id="scanHint">A USB scanner types the code and presses enter for you.</p>
+          </div>
+          <div class="result idle" id="result">
+            <div class="who" id="resWho">Ready</div>
+            <div class="what" id="resWhat">Pick where they're going, then scan.</div>
+            <div class="when" id="resWhen"></div>
+            <button class="btn small" type="button" id="undoBtn" hidden>Undo</button>
+          </div>
+          <div class="card" style="margin-top:18px">
+            <h3>Last scans</h3>
+            <ul class="recent" id="recent"></ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- BOARD -->
+    <section class="view" id="view-board" hidden>
+      <div class="stats" id="boardStats"></div>
+      <div class="card">
+        <input id="boardSearch" type="search" placeholder="Search a name, crew or code…" autocomplete="off" style="margin-bottom:16px">
+        <div id="boardGroups"></div>
+      </div>
+      <div class="card">
+        <details class="log">
+          <summary>Movement log</summary>
+          <ul class="feed" id="feed"></ul>
+        </details>
+      </div>
+    </section>
+
+    <!-- PROGRAMME -->
+    <section class="view" id="view-schedule" hidden>
+      <div class="card">
+        <div class="toolbar">
+          <div class="days" id="days"></div>
+          <button class="btn primary" type="button" id="actNew">Add activity</button>
+        </div>
+        <div class="agenda" id="agenda"></div>
+        <p class="muted" style="margin:14px 0 0">Tap an activity to change it. Dashed ones are hidden from the scan screen.</p>
+      </div>
+    </section>
+
+    <!-- PEOPLE -->
+    <section class="view" id="view-members" hidden>
+      <div class="card">
+        <h2>Add someone</h2>
+        <div class="row" style="margin-top:12px">
+          <div style="flex:2 1 220px"><label for="mName">Name</label><input id="mName" type="text" placeholder="Alex Moreno"></div>
+          <div><label for="mCrew">Crew or role</label><input id="mCrew" type="text" placeholder="Aurora Rover Unit"></div>
+          <div class="fit" style="align-self:flex-end"><button class="btn primary" type="button" id="mAdd">Add</button></div>
+        </div>
+        <details style="margin-top:14px">
+          <summary>Paste a whole list</summary>
+          <label for="mBulk" style="margin-top:10px">One person per line, crew after a comma</label>
+          <textarea id="mBulk" placeholder="Alex Moreno, Aurora Rover Unit&#10;Sam Whitlock, Attunga Rover Unit&#10;Priya Raman, Cove Rover Unit"></textarea>
+          <button class="btn" type="button" id="mBulkAdd" style="margin-top:10px">Add everyone</button>
+        </details>
+        <p class="status" id="mStatus"></p>
+      </div>
+
+      <div class="card">
+        <div class="toolbar">
+          <h2 style="margin:0">Everyone <span class="muted" id="mCount"></span></h2>
+          <button class="btn teal" type="button" id="sheetBtn">Download lanyard cards</button>
+        </div>
+        <p class="status" id="sheetStatus"></p>
+        <input id="mSearch" type="search" placeholder="Search…" autocomplete="off" style="margin-bottom:8px">
+        <div class="plist" id="memList"></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<!-- lanyard card -->
+<div class="modal" id="modal" hidden>
+  <div class="sheet">
+    <div class="lanyard" id="lanyard"></div>
+    <div class="foot">
+      <button class="btn primary grow" type="button" id="cardPng">Save as image</button>
+      <button class="btn" type="button" id="cardLink">Copy their link</button>
+      <button class="btn" type="button" data-close>Close</button>
+    </div>
+    <p class="status" id="cardStatus"></p>
+  </div>
+</div>
+
+<!-- activity editor -->
+<div class="modal" id="actModal" hidden>
+  <form class="sheet" id="actForm">
+    <h2 id="actTitle">Add activity</h2>
+    <div class="row">
+      <div style="flex:2 1 220px"><label for="actName">Name</label><input id="actName" type="text" placeholder="Beach games"></div>
+    </div>
+    <div class="row">
+      <div><label for="actLoc">Where</label><input id="actLoc" type="text" placeholder="Moonta Bay foreshore"></div>
+      <div><label for="actSite">On or off site</label><select id="actSite"><option value="on">On site</option><option value="off">Off site</option></select></div>
+    </div>
+    <div class="row">
+      <div><label for="actDate">Date</label><input id="actDate" type="date"></div>
+      <div><label for="actStart">Starts</label><input id="actStart" type="time"></div>
+      <div><label for="actEnd">Ends</label><input id="actEnd" type="time"></div>
+    </div>
+    <label class="check"><input type="checkbox" id="actDest"> Show on the scan screen</label>
+    <p class="status" id="actStatus"></p>
+    <div class="foot">
+      <button class="btn primary grow" type="submit">Save</button>
+      <button class="btn danger" type="button" id="actDel">Delete</button>
+      <button class="btn" type="button" data-close>Cancel</button>
+    </div>
+  </form>
+</div>
+
+<!-- person editor -->
+<div class="modal" id="memModal" hidden>
+  <form class="sheet" id="memForm">
+    <h2>Edit person</h2>
+    <div class="row">
+      <div><label for="eName">Name</label><input id="eName" type="text"></div>
+    </div>
+    <div class="row">
+      <div><label for="eCrew">Crew or role</label><input id="eCrew" type="text"></div>
+    </div>
+    <p class="status" id="memStatus"></p>
+    <div class="foot">
+      <button class="btn primary grow" type="submit">Save</button>
+      <button class="btn danger" type="button" id="memDel">Remove</button>
+      <button class="btn" type="button" data-close>Cancel</button>
+    </div>
+  </form>
+</div>
+
+<script src="/vendor/JsBarcode.all.min.js"></script>
+<script src="/vendor/qrcode.js"></script>
+<script src="/vendor/jsQR.js"></script>
+<script src="/app.js"></script>
+</body>
+</html>

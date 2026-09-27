@@ -1,0 +1,30 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "teenbeach-moonta",
+  "main": "src/index.js",
+  "compatibility_date": "2026-05-01",
+
+  "assets": {
+    "directory": "./public",
+    "binding": "ASSETS"
+  },
+
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "teenbeach",
+      "database_id": "a5980703-5faa-46a6-b558-0bf9a22427dd"
+    }
+  ],
+
+  // Plain settings. The staff PIN is a secret — set it with
+  // `wrangler secret put STAFF_PIN`, never in this file.
+  "vars": {
+    "EVENT_NAME": "Teen Beach Moonta",
+    "EVENT_DATES": "2–5 October 2026",
+    "EVENT_PLACE": "Moonta, SA",
+    "EVENT_EMAIL": "branchmoot@sarovers.com.au",
+    "EVENT_START_ISO": "2026-10-02T09:00:00+09:30",
+    "ORG_NAME": "Rover Scouts SA"
+  }
+}
